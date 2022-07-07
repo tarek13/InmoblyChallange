@@ -12,21 +12,20 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProductDetailsViewModel @Inject constructor(
-    private val productFavouriteHelper: com.inmobly.common_ui.utils.helper.ProductFavouriteHelper,
+    private val productFavouriteHelper: ProductFavouriteHelper,
     private val addProductToRecentlyViewedUseCase: AddProductToRecentlyViewedUseCase
-) : ViewModel(), com.inmobly.common_ui.utils.helper.IProductsFavouriteHelper by productFavouriteHelper {
+) : ViewModel(), IProductsFavouriteHelper by productFavouriteHelper {
 
-    override fun addProductToFavorites(product: com.inmobly.common_ui.model.products.Product?, position: Int) {
+    override fun addProductToFavorites(product: Product?, position: Int) {
 
         addProductToRecentlyViewedUseCase.execute(
             params = AddProductToRecentlyViewedUseCase.Params(product.mapToEntity()),
             completableUseCaseCallback = object : CompletableUseCaseCallback {
                 override fun onSuccess() {
-                    //  _isFavoriteSingleLiveEvent.value = Pair(position, true)
+
                 }
 
                 override fun onError(throwable: Throwable) {
-                    //_isFavoriteSingleLiveEvent.value = Pair(position, false)
                 }
 
             }

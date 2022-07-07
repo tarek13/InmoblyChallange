@@ -1,19 +1,18 @@
 package com.inmobly.shopping.midnightfashion.ui
 
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.inmobly.shopping.R
-import com.inmobly.shopping.databinding.ActivityMainBinding
-import com.inmobly.shopping.midnightfashion.ui.favorites.FavouriteFragment
-import com.inmobly.shopping.midnightfashion.ui.home.HomeFragment
-import com.inmobly.shopping.dresscode.utils.extensions.getCurrentFragment
 import com.inmobly.common_ui.utils.extensions.gone
 import com.inmobly.common_ui.utils.extensions.visible
+import com.inmobly.shopping.R
+import com.inmobly.shopping.databinding.ActivityMainBinding
+import com.inmobly.shopping.dresscode.utils.extensions.getCurrentFragment
+import com.inmobly.shopping.midnightfashion.ui.favorites.FavouriteFragment
+import com.inmobly.shopping.midnightfashion.ui.home.HomeFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -22,8 +21,6 @@ class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
     private var navController: NavController? = null
-
-    private val mainViewModel by viewModels<MainViewModel>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

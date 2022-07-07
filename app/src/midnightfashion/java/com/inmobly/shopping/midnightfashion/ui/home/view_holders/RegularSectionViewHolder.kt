@@ -5,6 +5,7 @@ import android.graphics.Color
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import com.inmobly.common_ui.databinding.ViewHolderSectionRegularBinding
+import com.inmobly.common_ui.model.products.Product
 import com.inmobly.common_ui.utils.StateListener
 import com.inmobly.common_ui.utils.extensions.gone
 import com.inmobly.common_ui.utils.extensions.showToastMessage
@@ -21,19 +22,16 @@ class RegularSectionViewHolder internal constructor(
 ) : RecyclerView.ViewHolder(binding.root), RegularProductsAdapter.ItemClickListener {
     private var regularProductsAdapter: RegularProductsAdapter? = null
     private var homeSection: com.inmobly.common_ui.model.products.HomeSection? = null
-    private var isLoaded = false
     fun onBind(homeSection: com.inmobly.common_ui.model.products.HomeSection?) {
         this.homeSection = homeSection
         binding.sectionTitle.text = homeSection?.name
         binding.sectionTitle.setTextColor(Color.WHITE)
         initProductsRecyclerView()
-     //   if (!isLoaded) {
             homeSectionCallBack.getSectionProductsCallBack(
                 homeSection,
                 adapterPosition,
                 stateListener
             )
-       // }
         observeLiveData()
     }
 
@@ -47,12 +45,11 @@ class RegularSectionViewHolder internal constructor(
 
     private fun observeLiveData() {
         stateListener.successResponseLiveData.observe(lifecycleOwner) { response: Any? ->
-            val productsList = response as List<com.inmobly.common_ui.model.products.Product?>?
+            val productsList = response as List<Product?>?
             productsList?.let {
                if(productsList.isNotEmpty()) binding.productContainer.visible() else binding.productContainer.gone()
                 regularProductsAdapter?.setData(it.toMutableList())
             }
-            isLoaded = true
         }
 
         stateListener.errorMessageLiveData.observe(lifecycleOwner) { errorMessage: Any? ->
@@ -65,7 +62,6 @@ class RegularSectionViewHolder internal constructor(
                 is String -> context.showToastMessage(errorMessage)
             }
             binding.productContainer.gone()
-            isLoaded = true
         }
 
         stateListener.loadingProgressLiveData.observe(lifecycleOwner) { status ->
@@ -81,11 +77,11 @@ class RegularSectionViewHolder internal constructor(
         }
     }
 
-    override fun onItemClick(product: com.inmobly.common_ui.model.products.Product?, position: Int) {
+    override fun onItemClick(product: Product?, position: Int) {
         homeSectionCallBack.onItemClick(product,position,adapterPosition)
     }
 
-    override fun onFavButtonClick(product: com.inmobly.common_ui.model.products.Product?, position: Int, regularProductsAdapter: RegularProductsAdapter?) {
+    override fun onFavButtonClick(product: Product?, position: Int, regularProductsAdapter: RegularProductsAdapter?) {
         homeSectionCallBack.onFavButtonClick(
             product,
             position,
@@ -95,7 +91,7 @@ class RegularSectionViewHolder internal constructor(
         )
     }
 
-    override fun onAddToCartClick(product: com.inmobly.common_ui.model.products.Product?, position: Int) {
+    override fun onAddToCartClick(product: Product?, position: Int) {
         homeSectionCallBack.onAddToCartClick(product,position,adapterPosition)
     }
 

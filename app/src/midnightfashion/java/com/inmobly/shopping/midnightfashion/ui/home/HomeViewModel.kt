@@ -18,11 +18,11 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getHomeSectionsUseCase: GetHomeSectionsUseCase,
     private val getProductsUseCase: GetProductsUseCase,
-    val stateListener: com.inmobly.common_ui.utils.StateListener,
-    private val errorHandlingUtils: com.inmobly.common_ui.utils.helper.ErrorHandlingUtils,
-    private val productFavouriteHelper: com.inmobly.common_ui.utils.helper.ProductFavouriteHelper,
+    val stateListener: StateListener,
+    private val errorHandlingUtils: ErrorHandlingUtils,
+    private val productFavouriteHelper: ProductFavouriteHelper,
     private val getRecentlyViewedProductsUseCase: GetRecentlyViewedProductsUseCase
-) : ViewModel(), com.inmobly.common_ui.utils.helper.IProductsFavouriteHelper by productFavouriteHelper {
+) : ViewModel(), IProductsFavouriteHelper by productFavouriteHelper {
 
 
     fun loadHomeSections() {
@@ -44,7 +44,7 @@ class HomeViewModel @Inject constructor(
         )
     }
 
-    fun loadProductsForSection(stateListener: com.inmobly.common_ui.utils.StateListener?, sectionId: Int?) {
+    fun loadProductsForSection(stateListener: StateListener?, sectionId: Int?) {
         stateListener?.setLoadingProgressLiveData(true)
         getProductsUseCase.execute(
             params = GetProductsUseCase.Params(AppConstants.APP_NAME_MIDNIGHT_FASHION, sectionId),
@@ -72,7 +72,7 @@ class HomeViewModel @Inject constructor(
 
     }
 
-    fun loadRecentlyViewedSection(stateListener: com.inmobly.common_ui.utils.StateListener?) {
+    fun loadRecentlyViewedSection(stateListener: StateListener?) {
         stateListener?.setLoadingProgressLiveData(true)
         getRecentlyViewedProductsUseCase.execute(
             singleUseCaseCallback = object : SingleUseCaseCallback<List<ProductEntity?>> {

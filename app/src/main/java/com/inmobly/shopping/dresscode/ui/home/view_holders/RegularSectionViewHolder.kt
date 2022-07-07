@@ -23,19 +23,16 @@ class RegularSectionViewHolder internal constructor(
 ) : RecyclerView.ViewHolder(binding.root), RegularProductsAdapter.ItemClickListener {
     private var regularProductsAdapter: RegularProductsAdapter? = null
     private var homeSection: HomeSection? = null
-    private var isLoaded = false
     fun onBind(homeSection: HomeSection?) {
         this.homeSection = homeSection
         binding.sectionTitle.text = homeSection?.name
         binding.sectionTitle.setTextColor(Color.BLACK)
         initProductsRecyclerView()
-     //   if (!isLoaded) {
             homeSectionCallBack.getSectionProductsCallBack(
                 homeSection,
                 adapterPosition,
                 stateListener
             )
-       // }
         observeLiveData()
     }
 
@@ -54,7 +51,6 @@ class RegularSectionViewHolder internal constructor(
                if(productsList.isNotEmpty()) binding.productContainer.visible() else binding.productContainer.gone()
                 regularProductsAdapter?.setData(it.toMutableList())
             }
-            isLoaded = true
         }
 
         stateListener.errorMessageLiveData.observe(lifecycleOwner) { errorMessage: Any? ->
@@ -67,7 +63,6 @@ class RegularSectionViewHolder internal constructor(
                 is String -> context.showToastMessage(errorMessage)
             }
             binding.productContainer.gone()
-            isLoaded = true
         }
 
         stateListener.loadingProgressLiveData.observe(lifecycleOwner) { status ->

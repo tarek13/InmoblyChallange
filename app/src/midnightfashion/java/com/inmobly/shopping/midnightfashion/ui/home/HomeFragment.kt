@@ -62,7 +62,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeSectionsAdapter.HomeS
             homeSectionsAdapter = HomeSectionsAdapter(requireActivity(), this, viewLifecycleOwner)
             binding.homeSectionRecyclerview.adapter = homeSectionsAdapter
 
-            val homeSectionList = response as List<com.inmobly.common_ui.model.products.HomeSection?>?
+            val homeSectionList = response as List<HomeSection?>?
             homeSectionList?.let {
                 if(homeSectionList.isNotEmpty()) {
                     binding.homeSectionRecyclerview.visible()
@@ -78,7 +78,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeSectionsAdapter.HomeS
         homeViewModel.stateListener.errorMessageLiveData.observe(viewLifecycleOwner) { errorMessage: Any? ->
             when (errorMessage) {
                 is Int -> activity?.showToastMessage(
-                    com.inmobly.common_ui.utils.helper.ErrorMessageHelper.showGeneralErrorMessage(
+                    ErrorMessageHelper.showGeneralErrorMessage(
                         errorMessage
                     )
                 )
@@ -99,19 +99,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeSectionsAdapter.HomeS
 
         }
 
-        homeViewModel.stateListener.unAuthorizedErrorLiveData.observe(viewLifecycleOwner) { status ->
-            if (status == true) {
-                /*activity?.displayAlertDialog(
-                    message = resources.getString(R.string.invalid_api_key),
-                    positiveButtonTitle = getString(android.R.string.ok),
-                    positiveOnClickListener = { _, _ ->
-                        activity?.finish()
-                    }
-
-                )*/
-            }
-        }
-
 
     }
 
@@ -121,9 +108,9 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeSectionsAdapter.HomeS
     }
 
     override fun getSectionProductsCallBack(
-        section: com.inmobly.common_ui.model.products.HomeSection?,
+        section: HomeSection?,
         position: Int,
-        stateListener: com.inmobly.common_ui.utils.StateListener?
+        stateListener: StateListener?
     ) {
         if(section?.id==-1) {
             homeViewModel.loadRecentlyViewedSection(stateListener)
@@ -133,14 +120,14 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeSectionsAdapter.HomeS
         }
     }
 
-    override fun onItemClick(product: com.inmobly.common_ui.model.products.Product?, position: Int, sectionPosition: Int) {
+    override fun onItemClick(product: Product?, position: Int, sectionPosition: Int) {
         val bundle = Bundle()
         bundle.putParcelable(AppConstants.PRODUCT_ITEM_KEY, product)
         findNavController().navigate(R.id.productDetailsFragment, bundle)
     }
 
     override fun onFavButtonClick(
-        product: com.inmobly.common_ui.model.products.Product?,
+        product: Product?,
         position: Int,
         sectionPosition: Int,
         regularProductsAdapter: RegularProductsAdapter?,
@@ -161,8 +148,8 @@ class HomeFragment : Fragment(R.layout.fragment_home), HomeSectionsAdapter.HomeS
         }
     }
 
-    override fun onAddToCartClick(product: com.inmobly.common_ui.model.products.Product?, position: Int, sectionPosition: Int) {
-        //TODO("Not yet implemented")
+    override fun onAddToCartClick(product: Product?, position: Int, sectionPosition: Int) {
+        activity?.showToastMessage(com.inmobly.common_ui.R.string.add_to_cart)
     }
 
     override fun onDestroy() {

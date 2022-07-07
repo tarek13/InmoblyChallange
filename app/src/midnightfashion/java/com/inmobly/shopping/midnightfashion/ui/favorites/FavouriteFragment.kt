@@ -56,7 +56,7 @@ class FavouriteFragment : Fragment(R.layout.fragment_favourite),
 
     private fun observeLiveData() {
         favouriteViewModel.stateListener.successResponseLiveData.observe(viewLifecycleOwner) { response: Any? ->
-            val productsList = response as List<com.inmobly.common_ui.model.products.Product?>?
+            val productsList = response as List<Product?>?
             if (productsList != null && productsList.isNotEmpty()) {
                 binding.productsListRecyclerView.visible()
                 binding.errorTextView.gone()
@@ -71,7 +71,7 @@ class FavouriteFragment : Fragment(R.layout.fragment_favourite),
         favouriteViewModel.stateListener.errorMessageLiveData.observe(viewLifecycleOwner) { errorMessage: Any? ->
             when (errorMessage) {
                 is Int -> activity?.showToastMessage(
-                    com.inmobly.common_ui.utils.helper.ErrorMessageHelper.showGeneralErrorMessage(
+                    ErrorMessageHelper.showGeneralErrorMessage(
                         errorMessage
                     )
                 )
@@ -92,23 +92,11 @@ class FavouriteFragment : Fragment(R.layout.fragment_favourite),
 
         }
 
-        favouriteViewModel.stateListener.unAuthorizedErrorLiveData.observe(viewLifecycleOwner) { status ->
-            if (status == true) {
-                /* activity?.displayAlertDialog(
-                     message = resources.getString(R.string.invalid_api_key),
-                     positiveButtonTitle = getString(android.R.string.ok),
-                     positiveOnClickListener = { _, _ ->
-                         activity?.finish()
-                     }
-
-                 )*/
-            }
-        }
 
         favouriteViewModel.productIsFavoriteLiveData().observe(viewLifecycleOwner) {
 
             it?.first?.let { pos ->
-                val result = regularProductsAdapter?.getData();
+                val result = regularProductsAdapter?.getData()
                 result?.removeAt(pos)
                 regularProductsAdapter?.setDataWithout(result)
                 regularProductsAdapter?.notifyItemRemoved(pos)
@@ -128,14 +116,14 @@ class FavouriteFragment : Fragment(R.layout.fragment_favourite),
     }
 
 
-    override fun onItemClick(product: com.inmobly.common_ui.model.products.Product?, position: Int) {
+    override fun onItemClick(product: Product?, position: Int) {
         val bundle = Bundle()
         bundle.putParcelable(AppConstants.PRODUCT_ITEM_KEY, product)
         findNavController().navigate(R.id.productDetailsFragment, bundle)
     }
 
     override fun onFavButtonClick(
-        product: com.inmobly.common_ui.model.products.Product?,
+        product: Product?,
         position: Int,
         regularProductsAdapter: RegularProductsAdapter?,
     ) {
@@ -144,7 +132,7 @@ class FavouriteFragment : Fragment(R.layout.fragment_favourite),
 
     }
 
-    override fun onAddToCartClick(product: com.inmobly.common_ui.model.products.Product?, position: Int) {
-        //TODO("Not yet implemented")
+    override fun onAddToCartClick(product: Product?, position: Int) {
+        activity?.showToastMessage(com.inmobly.common_ui.R.string.add_to_cart)
     }
 }

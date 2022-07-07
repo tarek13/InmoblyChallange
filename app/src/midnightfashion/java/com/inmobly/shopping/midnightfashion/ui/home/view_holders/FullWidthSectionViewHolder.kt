@@ -22,17 +22,14 @@ class FullWidthSectionViewHolder internal constructor(
 ) : RecyclerView.ViewHolder(binding.root), FullWidthProductsAdapter.ItemClickListener {
     private var regularProductsAdapter: FullWidthProductsAdapter? = null
     private var homeSection: HomeSection? = null
-    private var isLoaded = false
     fun onBind(homeSection: HomeSection?) {
         this.homeSection = homeSection
         initProductsRecyclerView()
-        if (!isLoaded) {
             homeSectionCallBack.getSectionProductsCallBack(
                 homeSection,
                 adapterPosition,
                 stateListener
             )
-        }
         observeLiveData()
     }
 
@@ -51,7 +48,6 @@ class FullWidthSectionViewHolder internal constructor(
                 binding.sectionFullRecyclerView.visible()
                 regularProductsAdapter?.setData(it)
             }
-            isLoaded=true
         }
 
         stateListener.errorMessageLiveData.observe(lifecycleOwner) { errorMessage: Any? ->
@@ -64,7 +60,6 @@ class FullWidthSectionViewHolder internal constructor(
                 is String -> context.showToastMessage(errorMessage)
             }
             binding.sectionFullRecyclerView.gone()
-            isLoaded=true
         }
 
         stateListener.loadingProgressLiveData.observe(lifecycleOwner) { status ->

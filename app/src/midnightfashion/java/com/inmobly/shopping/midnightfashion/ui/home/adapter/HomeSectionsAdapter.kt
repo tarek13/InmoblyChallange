@@ -59,22 +59,9 @@ class HomeSectionsAdapter internal constructor(
         when (holder) {
             is FullWidthSectionViewHolder -> {
                 holder.onBind(mData?.get(position))
-                /*val vm = homeViewModel.getBannerViewModelForIndex(position)
-                vm.sectionId = getItem(position)?.id
-                vm.icon = getItem(position)?.icon
-                holder.onBind(
-                    vm, homeViewModel
-                )*/
             }
             is RegularSectionViewHolder -> {
                 holder.onBind(mData?.get(position))
-                /*val vm = homeViewModel.getCategoriesViewModelForIndex(position)
-                vm.sectionId = getItem(position)?.id
-                vm.sectionTitle = getItem(position)?.title
-                vm.icon = getItem(position)?.icon
-                holder.onBind(
-                    vm, homeViewModel
-                )*/
             }
         }
     }

@@ -15,9 +15,9 @@ class FullWidthProductsAdapter internal constructor(
 ) : RecyclerView.Adapter<FullWidthProductsAdapter.ProductViewHolder>() {
     private val mInflater: LayoutInflater
     private val context: Context
-    private var mData: List<com.inmobly.common_ui.model.products.Product?>? = null
+    private var mData: List<Product?>? = null
 
-    fun setData(data: List<com.inmobly.common_ui.model.products.Product?>?) {
+    fun setData(data: List<Product?>?) {
         mData = data
         notifyDataSetChanged()
     }
@@ -49,7 +49,7 @@ class FullWidthProductsAdapter internal constructor(
     ) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun onBind(product: com.inmobly.common_ui.model.products.Product?) {
+        fun onBind(product: Product?) {
             binding.productNameTextView.text = product?.name
             binding.productPriceTextView.text = " ${product?.price}$"
             binding.productPhotoImageView.loadUrl(product?.img)
@@ -71,25 +71,15 @@ class FullWidthProductsAdapter internal constructor(
 
     }
 
-    // convenience method for getting data at click position
-    fun getItem(id: Int): com.inmobly.common_ui.model.products.Product? {
-        return mData?.get(id)
-    }
-
-    // allows clicks events to be caught
-    fun setClickListener(itemClickListener: ItemClickListener?) {
-        mClickListener = itemClickListener
-    }
-
     // parent activity will implement this method to respond to click events
     interface ItemClickListener {
-        fun onItemClick(product: com.inmobly.common_ui.model.products.Product?, position: Int)
+        fun onItemClick(product: Product?, position: Int)
         fun onFavButtonClick(
-            product: com.inmobly.common_ui.model.products.Product?,
+            product: Product?,
             position: Int,
             fullWidthProductsAdapter: FullWidthProductsAdapter
         )
-        fun onAddToCartClick(product: com.inmobly.common_ui.model.products.Product?, position: Int)
+        fun onAddToCartClick(product: Product?, position: Int)
     }
 
     // data is passed into the constructor

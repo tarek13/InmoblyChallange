@@ -15,18 +15,17 @@ class RegularProductsAdapter internal constructor(
 ) : RecyclerView.Adapter<RegularProductsAdapter.ProductViewHolder>() {
     private val mInflater: LayoutInflater
     private val context: Context
-    private var mData: MutableList<com.inmobly.common_ui.model.products.Product?>? = null
+    private var mData: MutableList<Product?>? = null
 
-    fun setData(data: MutableList<com.inmobly.common_ui.model.products.Product?>?) {
+    fun setData(data: MutableList<Product?>?) {
         mData = data
         notifyDataSetChanged()
     }
-    fun setDataWithout(data: MutableList<com.inmobly.common_ui.model.products.Product?>?) {
+    fun setDataWithout(data: MutableList<Product?>?) {
         mData = data
-       // notifyDataSetChanged()
     }
 
-    fun getData():MutableList<com.inmobly.common_ui.model.products.Product?>?{
+    fun getData():MutableList<Product?>?{
         return mData?.toMutableList()
     }
 
@@ -57,7 +56,7 @@ class RegularProductsAdapter internal constructor(
     ) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun onBind(product: com.inmobly.common_ui.model.products.Product?) {
+        fun onBind(product: Product?) {
             binding.productNameTextView.text = product?.name
             binding.productPriceTextView.text = " ${product?.price}$"
             binding.productPhotoImageView.loadUrl(product?.img)
@@ -82,26 +81,16 @@ class RegularProductsAdapter internal constructor(
 
     }
 
-    // convenience method for getting data at click position
-    fun getItem(id: Int): com.inmobly.common_ui.model.products.Product? {
-        return mData?.get(id)
-    }
-
-    // allows clicks events to be caught
-    fun setClickListener(itemClickListener: ItemClickListener?) {
-        mClickListener = itemClickListener
-    }
-
     // parent activity will implement this method to respond to click events
     interface ItemClickListener {
-        fun onItemClick(product: com.inmobly.common_ui.model.products.Product?, position: Int)
+        fun onItemClick(product: Product?, position: Int)
         fun onFavButtonClick(
-            product: com.inmobly.common_ui.model.products.Product?,
+            product: Product?,
             position: Int,
             regularProductsAdapter: RegularProductsAdapter?
         )
 
-        fun onAddToCartClick(product: com.inmobly.common_ui.model.products.Product?, position: Int)
+        fun onAddToCartClick(product: Product?, position: Int)
     }
 
     // data is passed into the constructor

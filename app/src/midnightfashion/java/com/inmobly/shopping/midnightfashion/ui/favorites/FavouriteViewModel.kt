@@ -16,10 +16,10 @@ import javax.inject.Inject
 @HiltViewModel
 class FavouriteViewModel @Inject constructor(
     private val getFavoriteProductsUseCase: GetFavoriteProductsUseCase,
-    val stateListener: com.inmobly.common_ui.utils.StateListener,
-    private val errorHandlingUtils: com.inmobly.common_ui.utils.helper.ErrorHandlingUtils,
-    private val productFavouriteHelper: com.inmobly.common_ui.utils.helper.ProductFavouriteHelper
-) : ViewModel() , com.inmobly.common_ui.utils.helper.IProductsFavouriteHelper by  productFavouriteHelper{
+    val stateListener: StateListener,
+    private val errorHandlingUtils: ErrorHandlingUtils,
+    private val productFavouriteHelper: ProductFavouriteHelper
+) : ViewModel() , IProductsFavouriteHelper by  productFavouriteHelper{
 
     fun loadFavoriteProducts() {
         stateListener.setLoadingProgressLiveData(true)

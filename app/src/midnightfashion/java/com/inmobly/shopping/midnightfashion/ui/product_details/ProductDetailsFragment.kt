@@ -21,7 +21,7 @@ class ProductDetailsFragment : Fragment(R.layout.fragment_product_details) {
 
     private val productDetailsViewModel by viewModels<ProductDetailsViewModel>()
 
-    private var product: com.inmobly.common_ui.model.products.Product? = null
+    private var product: Product? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
