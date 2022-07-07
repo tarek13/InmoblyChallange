@@ -1,0 +1,4 @@
+rootProject.name = "Inmobly_Challenge"
+include(":app")
+include(":core")
+include(":common-ui")

@@ -1,0 +1,10 @@
+<resources>
+    <string name="home">Home</string>
+    <string name="shop">Shop</string>
+    <string name="favorites">Favorites</string>
+    <string name="error_load_data">Something went wrong, please try again later</string>
+    <string name="language">en</string>
+    <string name="not_connected_to_internet">Please check the network connection</string>
+    <string name="error_msg_timeout">The server took a long time to respond, try again</string>
+    <string name="add_to_cart">Add to cart</string>
+</resources>
